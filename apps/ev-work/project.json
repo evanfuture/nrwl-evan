@@ -1,0 +1,91 @@
+{
+  "projectType": "application",
+  "root": "apps/ev-work",
+  "sourceRoot": "apps/ev-work/src",
+  "prefix": "nrwl-evan",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ev-work",
+        "index": "apps/ev-work/src/index.html",
+        "main": "apps/ev-work/src/main.ts",
+        "polyfills": "apps/ev-work/src/polyfills.ts",
+        "tsConfig": "apps/ev-work/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/ev-work/src/favicon.ico", "apps/ev-work/src/assets"],
+        "styles": ["apps/ev-work/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/ev-work/src/environments/environment.ts",
+              "with": "apps/ev-work/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ev-work:build:production"
+        },
+        "development": {
+          "browserTarget": "ev-work:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ev-work:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/ev-work/src/**/*.ts",
+          "apps/ev-work/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ev-work"],
+      "options": {
+        "jestConfig": "apps/ev-work/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

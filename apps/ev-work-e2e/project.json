@@ -1,0 +1,28 @@
+{
+  "root": "apps/ev-work-e2e",
+  "sourceRoot": "apps/ev-work-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/ev-work-e2e/cypress.json",
+        "devServerTarget": "ev-work:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ev-work:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ev-work-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["ev-work"]
+}

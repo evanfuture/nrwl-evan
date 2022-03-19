@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "ev-work": "apps/ev-work",
+    "ev-work-e2e": "apps/ev-work-e2e"
+  }
+}
