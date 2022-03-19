@@ -1,21 +1,19 @@
 import { Action } from '@ngrx/store';
-
 import * as TicketsActions from './tickets.actions';
-import { TicketsEntity } from './tickets.models';
-import { State, initialState, reducer } from './tickets.reducer';
+import { Ticket } from './tickets.models';
+import { initialState, reducer, State } from './tickets.reducer';
 
 describe('Tickets Reducer', () => {
-  const createTicketsEntity = (id: string, name = ''): TicketsEntity => ({
+  const createTicketsEntity = (id: number): Ticket => ({
     id,
-    name: name || `name-${id}`,
+    description: '',
+    assigneeId: null,
+    completed: false,
   });
 
   describe('valid Tickets actions', () => {
     it('loadTicketsSuccess should return the list of known Tickets', () => {
-      const tickets = [
-        createTicketsEntity('PRODUCT-AAA'),
-        createTicketsEntity('PRODUCT-zzz'),
-      ];
+      const tickets = [createTicketsEntity(100), createTicketsEntity(101)];
       const action = TicketsActions.loadTicketsSuccess({ tickets });
 
       const result: State = reducer(initialState, action);

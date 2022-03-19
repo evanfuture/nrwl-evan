@@ -1,7 +1,5 @@
-import { state } from '@angular/animations';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
-
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as TicketsActions from './tickets.actions';
 import { Ticket } from './tickets.models';
 
@@ -17,8 +15,7 @@ export interface TicketsPartialState {
   readonly [TICKETS_FEATURE_KEY]: State;
 }
 
-export const ticketsAdapter: EntityAdapter<Ticket> =
-  createEntityAdapter<Ticket>();
+export const ticketsAdapter: EntityAdapter<Ticket> = createEntityAdapter<Ticket>();
 
 export const initialState: State = ticketsAdapter.getInitialState({
   // set initial required properties

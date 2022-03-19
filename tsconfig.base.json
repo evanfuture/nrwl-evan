@@ -15,15 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nrwl-evan/web/data-access-tickets": [
-        "libs/web/data-access-tickets/src/index.ts"
-      ],
-      "@nrwl-evan/web/feature-ticket-detail": [
-        "libs/web/feature-ticket-detail/src/index.ts"
-      ],
-      "@nrwl-evan/web/feature-ticket-list": [
-        "libs/web/feature-ticket-list/src/index.ts"
-      ],
+      "@nrwl-evan/web/data-access-tickets": ["libs/web/data-access-tickets/src/index.ts"],
+      "@nrwl-evan/web/feature-ticket-detail": ["libs/web/feature-ticket-detail/src/index.ts"],
+      "@nrwl-evan/web/feature-ticket-list": ["libs/web/feature-ticket-list/src/index.ts"],
       "@nrwl-evan/web/shell": ["libs/web/shell/src/index.ts"]
     }
   },

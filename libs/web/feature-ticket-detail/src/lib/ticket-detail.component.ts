@@ -1,12 +1,7 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  NgModule,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { getSelected } from '@nrwl-evan/web/data-access-tickets';
+import { ChangeDetectionStrategy, Component, NgModule, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { getSelected } from '@nrwl-evan/web/data-access-tickets';
 
 @Component({
   selector: 'nrwl-evan-ticket-detail',

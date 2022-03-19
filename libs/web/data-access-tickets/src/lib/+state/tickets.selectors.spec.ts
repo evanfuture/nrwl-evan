@@ -1,37 +1,28 @@
-import { TicketsEntity } from './tickets.models';
-import {
-  ticketsAdapter,
-  TicketsPartialState,
-  initialState,
-} from './tickets.reducer';
+import { Ticket } from './tickets.models';
+import { initialState, ticketsAdapter, TicketsPartialState } from './tickets.reducer';
 import * as TicketsSelectors from './tickets.selectors';
 
 describe('Tickets Selectors', () => {
   const ERROR_MSG = 'No Error Available';
-  const getTicketsId = (it: TicketsEntity) => it.id;
-  const createTicketsEntity = (id: string, name = '') =>
+  const getTicketsId = (it: Ticket) => it.id;
+  const createTicketsEntity = (id: number) =>
     ({
       id,
-      name: name || `name-${id}`,
-    } as TicketsEntity);
+      description: '',
+      assigneeId: null,
+      completed: false,
+    } as Ticket);
 
   let state: TicketsPartialState;
 
   beforeEach(() => {
     state = {
-      tickets: ticketsAdapter.setAll(
-        [
-          createTicketsEntity('PRODUCT-AAA'),
-          createTicketsEntity('PRODUCT-BBB'),
-          createTicketsEntity('PRODUCT-CCC'),
-        ],
-        {
-          ...initialState,
-          selectedId: 'PRODUCT-BBB',
-          error: ERROR_MSG,
-          loaded: true,
-        },
-      ),
+      tickets: ticketsAdapter.setAll([createTicketsEntity(100), createTicketsEntity(101), createTicketsEntity(102)], {
+        ...initialState,
+        selectedId: '101',
+        error: ERROR_MSG,
+        loaded: true,
+      }),
     };
   });
 
@@ -45,7 +36,7 @@ describe('Tickets Selectors', () => {
     });
 
     it('getSelected() should return the selected Entity', () => {
-      const result = TicketsSelectors.getSelected(state) as TicketsEntity;
+      const result = TicketsSelectors.getSelected(state) as Ticket;
       const selId = getTicketsId(result);
 
       expect(selId).toBe('PRODUCT-BBB');

@@ -5,7 +5,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { NxModule } from '@nrwl/angular';
 import { hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
-
 import * as TicketsActions from './tickets.actions';
 import { TicketsEffects } from './tickets.effects';
 
@@ -16,25 +15,21 @@ describe('TicketsEffects', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NxModule.forRoot()],
-      providers: [
-        TicketsEffects,
-        provideMockActions(() => actions),
-        provideMockStore(),
-      ],
+      providers: [TicketsEffects, provideMockActions(() => actions), provideMockStore()],
     });
 
     effects = TestBed.inject(TicketsEffects);
   });
 
-  describe('init$', () => {
+  describe('loadTickets$', () => {
     it('should work', () => {
-      actions = hot('-a-|', { a: TicketsActions.init() });
+      actions = hot('-a-|', { a: TicketsActions.loadTickets() });
 
       const expected = hot('-a-|', {
         a: TicketsActions.loadTicketsSuccess({ tickets: [] }),
       });
 
-      expect(effects.init$).toBeObservable(expected);
+      expect(effects.loadTickets$).toBeObservable(expected);
     });
   });
 });

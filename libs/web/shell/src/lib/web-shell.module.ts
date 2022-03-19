@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LayoutComponent, LayoutComponentModule } from './layout.component';
 import { WebDataAccessTicketsModule } from '@nrwl-evan/web/data-access-tickets';
+import { LayoutComponent, LayoutComponentModule } from './layout.component';
 
 @NgModule({
   imports: [
@@ -16,10 +16,7 @@ import { WebDataAccessTicketsModule } from '@nrwl-evan/web/data-access-tickets';
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('@nrwl-evan/web/feature-ticket-list').then(
-                (m) => m.WebFeatureTicketListModule,
-              ),
+            loadChildren: () => import('@nrwl-evan/web/feature-ticket-list').then((m) => m.WebFeatureTicketListModule),
           },
         ],
       },

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { Ticket, User } from './+state/tickets.models';
 
 /**
@@ -37,11 +37,9 @@ export class BackendService {
 
   lastId = 1;
 
-  private findTicketById = (id: number) =>
-    this.storedTickets.find((ticket) => ticket.id === +id);
+  private findTicketById = (id: number) => this.storedTickets.find((ticket) => ticket.id === +id);
 
-  private findUserById = (id: number) =>
-    this.storedUsers.find((user) => user.id === +id);
+  private findUserById = (id: number) => this.storedUsers.find((user) => user.id === +id);
 
   tickets(): Observable<Ticket[]> {
     return of(this.storedTickets).pipe(delay(randomDelay()));
@@ -89,9 +87,7 @@ export class BackendService {
 
     const updatedTicket = { ...foundTicket, ...updates };
 
-    this.storedTickets = this.storedTickets.map((t) =>
-      t.id === ticketId ? updatedTicket : t,
-    );
+    this.storedTickets = this.storedTickets.map((t) => (t.id === ticketId ? updatedTicket : t));
 
     return of(updatedTicket).pipe(delay(randomDelay()));
   }

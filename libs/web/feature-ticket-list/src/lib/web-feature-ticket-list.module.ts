@@ -1,10 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-  TicketListComponent,
-  TicketListComponentModule,
-} from './ticket-list.component';
+import { TicketListComponent, TicketListComponentModule } from './ticket-list.component';
 
 @NgModule({
   imports: [
@@ -18,9 +15,7 @@ import {
           {
             path: ':id',
             loadChildren: () =>
-              import('@nrwl-evan/web/feature-ticket-detail').then(
-                (m) => m.WebFeatureTicketDetailModule,
-              ),
+              import('@nrwl-evan/web/feature-ticket-detail').then((m) => m.WebFeatureTicketDetailModule),
           },
         ],
       },
