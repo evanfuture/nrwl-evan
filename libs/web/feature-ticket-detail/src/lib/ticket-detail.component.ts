@@ -12,9 +12,13 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TicketDetailComponent implements OnInit {
-  constructor() {}
+  constructor() {
+    console.log('something');
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('something');
+  }
 }
 
 @NgModule({

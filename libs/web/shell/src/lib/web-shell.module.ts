@@ -13,26 +13,27 @@ import { WebDataAccessTicketsModule } from '@nrwl-evan/web/data-access-tickets';
       {
         path: '',
         component: LayoutComponent,
-        children: [],
-      },
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full',
-      },
-      {
-        path: 'list',
-        loadChildren: () =>
-          import('@nrwl-evan/web/feature-ticket-list').then(
-            (m) => m.WebFeatureTicketListModule
-          ),
-      },
-      {
-        path: ':id',
-        loadChildren: () =>
-          import('@nrwl-evan/web/feature-ticket-detail').then(
-            (m) => m.WebFeatureTicketDetailModule
-          ),
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full',
+          },
+          {
+            path: 'list',
+            loadChildren: () =>
+              import('@nrwl-evan/web/feature-ticket-list').then(
+                (m) => m.WebFeatureTicketListModule
+              ),
+          },
+          {
+            path: ':id',
+            loadChildren: () =>
+              import('@nrwl-evan/web/feature-ticket-detail').then(
+                (m) => m.WebFeatureTicketDetailModule
+              ),
+          },
+        ],
       },
     ]),
   ],
