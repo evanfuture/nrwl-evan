@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nrwl-evan/web/data-access-tickets": [
+        "libs/web/data-access-tickets/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

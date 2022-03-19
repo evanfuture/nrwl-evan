@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/web/data-access-tickets",
+  "sourceRoot": "libs/web/data-access-tickets/src",
+  "prefix": "nrwl-evan",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/web/data-access-tickets"],
+      "options": {
+        "jestConfig": "libs/web/data-access-tickets/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/web/data-access-tickets/src/**/*.ts",
+          "libs/web/data-access-tickets/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
