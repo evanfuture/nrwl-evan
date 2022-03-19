@@ -1,14 +1,18 @@
 import { createAction, props } from '@ngrx/store';
-import { TicketsEntity } from './tickets.models';
+import { Ticket } from './tickets.models';
 
-export const init = createAction('[Tickets Page] Init');
+export const loadTickets = createAction('[Tickets] Load Tickets');
 
 export const loadTicketsSuccess = createAction(
-  '[Tickets/API] Load Tickets Success',
-  props<{ tickets: TicketsEntity[] }>()
+  '[Tickets] Load Tickets Success',
+  props<{ tickets: Ticket[] }>(),
 );
 
 export const loadTicketsFailure = createAction(
-  '[Tickets/API] Load Tickets Failure',
-  props<{ error: any }>()
+  '[Tickets] Load Tickets Failure',
+  props<{ error: any }>(),
+);
+export const setId = createAction(
+  '[Tickets] Set Ticket Id',
+  props<{ id: string | null }>(),
 );

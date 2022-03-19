@@ -11,7 +11,7 @@ import { BackendService } from './backend.service';
     CommonModule,
     StoreModule.forFeature(
       fromTickets.TICKETS_FEATURE_KEY,
-      fromTickets.reducer
+      fromTickets.reducer,
     ),
     EffectsModule.forFeature([TicketsEffects]),
   ],

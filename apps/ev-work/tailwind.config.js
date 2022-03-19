@@ -7,7 +7,11 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'nx-blue': '#143157',
+      },
+    },
   },
   plugins: [],
 };

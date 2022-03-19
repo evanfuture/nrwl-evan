@@ -10,7 +10,21 @@ import {
   imports: [
     CommonModule,
     TicketListComponentModule,
-    RouterModule.forChild([{ path: '', component: TicketListComponent }]),
+    RouterModule.forChild([
+      {
+        path: '',
+        component: TicketListComponent,
+        children: [
+          {
+            path: ':id',
+            loadChildren: () =>
+              import('@nrwl-evan/web/feature-ticket-detail').then(
+                (m) => m.WebFeatureTicketDetailModule,
+              ),
+          },
+        ],
+      },
+    ]),
   ],
 })
 export class WebFeatureTicketListModule {}

@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'nrwl-evan-layout',
-  template: `<router-outlet></router-outlet>`,
+  template: `<div class="container mx-auto px-4 md:px-0">
+    <router-outlet></router-outlet>
+  </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {}

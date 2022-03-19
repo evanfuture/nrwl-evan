@@ -1,27 +1,39 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { fetch } from '@nrwl/angular';
+import { ROUTER_NAVIGATED, getSelectors } from '@ngrx/router-store';
+import { Store } from '@ngrx/store';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { BackendService } from '../backend.service';
 
 import * as TicketsActions from './tickets.actions';
-import * as TicketsFeature from './tickets.reducer';
 
 @Injectable()
 export class TicketsEffects {
-  init$ = createEffect(() =>
+  loadTickets$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TicketsActions.init),
-      fetch({
-        run: (action) => {
-          // Your custom service 'load' logic goes here. For now just return a success action...
-          return TicketsActions.loadTicketsSuccess({ tickets: [] });
-        },
-        onError: (action, error) => {
-          console.error('Error', error);
-          return TicketsActions.loadTicketsFailure({ error });
-        },
-      })
-    )
+      ofType(TicketsActions.loadTickets),
+      switchMap(() =>
+        this.backendService.tickets().pipe(
+          map((tickets) => TicketsActions.loadTicketsSuccess({ tickets })),
+          catchError((error) =>
+            of(TicketsActions.loadTicketsFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
-  constructor(private readonly actions$: Actions) {}
+  setCurrentTicketId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      mergeMap(() => this.store.select(getSelectors().selectRouteParam('id'))),
+      map((id) => TicketsActions.setId({ id: id || null })),
+    ),
+  );
+
+  constructor(
+    private readonly actions$: Actions,
+    private backendService: BackendService,
+    private store: Store,
+  ) {}
 }

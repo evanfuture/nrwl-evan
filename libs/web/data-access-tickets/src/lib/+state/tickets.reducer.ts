@@ -1,13 +1,14 @@
+import { state } from '@angular/animations';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as TicketsActions from './tickets.actions';
-import { TicketsEntity } from './tickets.models';
+import { Ticket } from './tickets.models';
 
 export const TICKETS_FEATURE_KEY = 'tickets';
 
-export interface State extends EntityState<TicketsEntity> {
-  selectedId?: string | number; // which Tickets record has been selected
+export interface State extends EntityState<Ticket> {
+  selectedId?: string | null; // which Tickets record has been selected
   loaded: boolean; // has the Tickets list been loaded
   error?: string | null; // last known error (if any)
 }
@@ -16,8 +17,8 @@ export interface TicketsPartialState {
   readonly [TICKETS_FEATURE_KEY]: State;
 }
 
-export const ticketsAdapter: EntityAdapter<TicketsEntity> =
-  createEntityAdapter<TicketsEntity>();
+export const ticketsAdapter: EntityAdapter<Ticket> =
+  createEntityAdapter<Ticket>();
 
 export const initialState: State = ticketsAdapter.getInitialState({
   // set initial required properties
@@ -26,18 +27,22 @@ export const initialState: State = ticketsAdapter.getInitialState({
 
 const ticketsReducer = createReducer(
   initialState,
-  on(TicketsActions.init, (state) => ({
+  on(TicketsActions.loadTickets, (state) => ({
     ...state,
     loaded: false,
     error: null,
   })),
   on(TicketsActions.loadTicketsSuccess, (state, { tickets }) =>
-    ticketsAdapter.setAll(tickets, { ...state, loaded: true })
+    ticketsAdapter.setAll(tickets, { ...state, loaded: true }),
   ),
   on(TicketsActions.loadTicketsFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(TicketsActions.setId, (state, { id }) => ({
+    ...state,
+    selectedId: id,
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

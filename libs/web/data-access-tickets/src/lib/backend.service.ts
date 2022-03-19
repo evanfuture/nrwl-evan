@@ -1,24 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
+import { Ticket, User } from './+state/tickets.models';
 
 /**
  * This service acts as a mock backend.
  *
  * You are free to modify it as you see.
  */
-
-export type User = {
-  id: number;
-  name: string;
-};
-
-export type Ticket = {
-  id: number;
-  description: string;
-  assigneeId: number | null;
-  completed: boolean;
-};
 
 function randomDelay() {
   return Math.random() * 1000;
@@ -54,7 +43,7 @@ export class BackendService {
   private findUserById = (id: number) =>
     this.storedUsers.find((user) => user.id === +id);
 
-  tickets() {
+  tickets(): Observable<Ticket[]> {
     return of(this.storedTickets).pipe(delay(randomDelay()));
   }
 
@@ -101,7 +90,7 @@ export class BackendService {
     const updatedTicket = { ...foundTicket, ...updates };
 
     this.storedTickets = this.storedTickets.map((t) =>
-      t.id === ticketId ? updatedTicket : t
+      t.id === ticketId ? updatedTicket : t,
     );
 
     return of(updatedTicket).pipe(delay(randomDelay()));

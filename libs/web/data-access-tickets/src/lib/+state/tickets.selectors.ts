@@ -9,30 +9,30 @@ const { selectAll, selectEntities } = ticketsAdapter.getSelectors();
 
 export const getTicketsLoaded = createSelector(
   getTicketsState,
-  (state: State) => state.loaded
+  (state: State) => state.loaded,
 );
 
 export const getTicketsError = createSelector(
   getTicketsState,
-  (state: State) => state.error
+  (state: State) => state.error,
 );
 
 export const getAllTickets = createSelector(getTicketsState, (state: State) =>
-  selectAll(state)
+  selectAll(state),
 );
 
 export const getTicketsEntities = createSelector(
   getTicketsState,
-  (state: State) => selectEntities(state)
+  (state: State) => selectEntities(state),
 );
 
 export const getSelectedId = createSelector(
   getTicketsState,
-  (state: State) => state.selectedId
+  (state: State) => state.selectedId,
 );
 
 export const getSelected = createSelector(
   getTicketsEntities,
   getSelectedId,
-  (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
+  (entities, selectedId) => (selectedId ? entities[selectedId] : undefined),
 );

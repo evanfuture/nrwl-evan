@@ -7,6 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { WebShellModule } from '@nrwl-evan/web/shell';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,15 +15,16 @@ import { WebShellModule } from '@nrwl-evan/web/shell';
     BrowserModule,
     WebShellModule,
     StoreModule.forRoot(
-      {},
+      { router: routerReducer },
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
           strictActionImmutability: true,
           strictStateImmutability: true,
         },
-      }
+      },
     ),
+    StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
