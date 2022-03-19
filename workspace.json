@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "projects": {
+    "ev-work": "apps/ev-work",
+    "ev-work-e2e": "apps/ev-work-e2e",
+    "web-data-access-tickets": "libs/web/data-access-tickets",
+    "web-feature-ticket-detail": "libs/web/feature-ticket-detail",
+    "web-feature-ticket-list": "libs/web/feature-ticket-list",
+    "web-shell": "libs/web/shell"
+  }
+}

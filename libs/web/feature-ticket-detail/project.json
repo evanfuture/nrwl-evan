@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/web/feature-ticket-detail",
+  "sourceRoot": "libs/web/feature-ticket-detail/src",
+  "prefix": "nrwl-evan",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/web/feature-ticket-detail"],
+      "options": {
+        "jestConfig": "libs/web/feature-ticket-detail/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/web/feature-ticket-detail/src/**/*.ts",
+          "libs/web/feature-ticket-detail/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
