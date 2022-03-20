@@ -1,35 +1,60 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Action } from '@ngrx/store';
-import { provideMockStore } from '@ngrx/store/testing';
-import { NxModule } from '@nrwl/angular';
-import { hot } from 'jasmine-marbles';
-import { Observable } from 'rxjs';
+import { fakeTime, subscribeSpyTo } from '@hirez_io/observer-spy';
+import { ActionsSubject } from '@ngrx/store';
+import { getMockStore } from '@ngrx/store/testing';
+import { BackendService } from '../backend.service';
 import * as TicketsActions from './tickets.actions';
 import { TicketsEffects } from './tickets.effects';
+import { getSelectedId } from './tickets.selectors';
 
-describe('TicketsEffects', () => {
-  let actions: Observable<Action>;
-  let effects: TicketsEffects;
+it(
+  'loadTickets$ dispatches success action',
+  fakeTime((flush) => {
+    const actions = new ActionsSubject();
+    const effects = new TicketsEffects(
+      actions,
+      newBackendService(),
+      getMockStore({
+        selectors: [{ selector: getSelectedId, value: null }],
+      }),
+    );
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NxModule.forRoot()],
-      providers: [TicketsEffects, provideMockActions(() => actions), provideMockStore()],
-    });
+    const observerSpy = subscribeSpyTo(effects.loadTickets$);
 
-    effects = TestBed.inject(TicketsEffects);
-  });
+    const action = TicketsActions.loadTickets();
+    actions.next(action);
+    flush();
 
-  describe('loadTickets$', () => {
-    it('should work', () => {
-      actions = hot('-a-|', { a: TicketsActions.loadTickets() });
+    expect(observerSpy.getValues()).toEqual([
+      TicketsActions.loadTicketsSuccess({ tickets: newBackendService().storedTickets }),
+    ]);
+  }),
+);
 
-      const expected = hot('-a-|', {
-        a: TicketsActions.loadTicketsSuccess({ tickets: [] }),
-      });
+it(
+  'updateTicket$ dispatches success action',
+  fakeTime((flush) => {
+    const updates = { description: 'new description' };
+    const currentId = 1;
 
-      expect(effects.loadTickets$).toBeObservable(expected);
-    });
-  });
-});
+    const actions = new ActionsSubject();
+    const effects = new TicketsEffects(
+      actions,
+      newBackendService(),
+      getMockStore({
+        selectors: [{ selector: getSelectedId, value: currentId }],
+      }),
+    );
+
+    const observerSpy = subscribeSpyTo(effects.updateTicket$);
+
+    const action = TicketsActions.updateTicket({ updates });
+    actions.next(action);
+    flush();
+
+    expect(observerSpy.getValues()).toEqual([TicketsActions.updateTicketSuccess({ updates, id: currentId })]);
+  }),
+);
+
+function newBackendService(): BackendService {
+  return new BackendService(); //  not mocking currently because this is actually a mock anyway!
+}

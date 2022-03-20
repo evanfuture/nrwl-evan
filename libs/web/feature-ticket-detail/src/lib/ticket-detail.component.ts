@@ -123,7 +123,6 @@ export class TicketDetailComponent {
   }
 
   onSave(isNew: boolean, isUpdating: boolean): void {
-    console.log({ isNew, isUpdating });
     const { description, assigneeId, completed } = this.form.controls;
     const isValid: boolean = description.valid;
     if (isValid && !isUpdating) {

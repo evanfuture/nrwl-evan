@@ -82,7 +82,7 @@ export class BackendService {
     const foundTicket = this.findTicketById(ticketId);
 
     if (!foundTicket) {
-      return throwError(new Error('ticket not found'));
+      return throwError(() => new Error('ticket not found'));
     }
 
     const updatedTicket = { ...foundTicket, ...updates };
