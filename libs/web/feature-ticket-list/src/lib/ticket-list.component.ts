@@ -23,15 +23,8 @@ import { getAllTicketsExpanded, getTicketsLoading, init } from '@nrwl-evan/web/d
                 <dl class="mt-2 flex flex-wrap text-sm leading-6 font-medium">
                   <div class="absolute top-0 right-0 flex items-center space-x-1">
                     <dt class="text-slate-400">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <circle cx="12" cy="12" r="10" />
+                      <svg class="h-6 w-6">
+                        <use xlink:href="#icon-circle"></use>
                       </svg>
                     </dt>
                   </div>
@@ -55,23 +48,8 @@ import { getAllTicketsExpanded, getTicketsLoading, init } from '@nrwl-evan/web/d
                   <div class="absolute top-0 right-0 flex items-center space-x-1">
                     <dt [ngClass]="ticket.completed ? 'text-sky-500' : 'text-gray-400'">
                       <span class="sr-only">Status</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          *ngIf="ticket.completed; else notCompleted"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                        <ng-template #notCompleted>
-                          <circle cx="12" cy="12" r="10" />
-                        </ng-template>
+                      <svg class="h-6 w-6">
+                        <use [attr.xlink:href]="ticket.completed ? '#icon-circle-check' : '#icon-circle'"></use>
                       </svg>
                     </dt>
                   </div>

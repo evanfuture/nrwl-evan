@@ -28,47 +28,40 @@ import { Subscription } from 'rxjs';
       class="relative bg-slate-800 rounded-xl shadow-xl ring-1 ring-slate-900/5 divide-y  my-auto  divide-slate-200/5 highlight-white/10"
     >
       <button (click)="onClose()" class="absolute top-0 right-0 p-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        <svg class="h-4 w-4">
+          <use xlink:href="#icon-close"></use>
         </svg>
       </button>
       <div class="py-6 px-4">
         <form [formGroup]="form">
-          <div class="px-4">
-            <label class="mb-10 block">
-              <span class="mb-2 block text-gray-700">Description</span>
-              <input
-                class="text-slate-600 appearance-none rounded border py-2 px-3 leading-tight shadow mx-auto block w-3/4"
-                type="text"
-                placeholder="..."
-                aria-label="Description"
-                formControlName="description"
-              />
-            </label>
-          </div>
+          <label class="mb-10 block">
+            <span class="mb-2 block text-slate-400">Description</span>
+            <input
+              class="text-slate-600 appearance-none rounded border py-2 px-3 leading-tight shadow  block w-3/4"
+              type="text"
+              placeholder="..."
+              aria-label="Description"
+              formControlName="description"
+            />
+          </label>
+
+          <label class="mb-4 block">
+            <span class="mb-2 block text-slate-400">Completed</span>
+            <div class="relative block">
+              <input type="checkbox" formControlName="completed" />
+            </div>
+          </label>
 
           <label class="mb-10 block">
-            <span class="mb-2 block text-gray-700">Assignee</span>
-            <div class="relative mx-auto block w-3/4">
+            <span class="mb-2 block text-slate-400">Assignee</span>
+            <div class="relative block">
               <select
                 formControlName="assigneeId"
-                class="text-slate-600 appearance-none rounded border py-2 px-3 leading-tight shadow"
+                class="text-slate-600  rounded border py-2 px-3 leading-tight shadow"
               >
                 <option [ngValue]="null">Unassigned</option>
                 <option *ngFor="let user of users$ | async" [ngValue]="user.id">{{ user.name }}</option>
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg class="h-4 w-4">
-                  <use xlink:href="#dm-chevron"></use>
-                </svg>
-              </div>
             </div>
           </label>
 
