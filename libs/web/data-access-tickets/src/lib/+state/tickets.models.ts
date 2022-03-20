@@ -10,6 +10,11 @@ export type User = {
 export type Ticket = {
   id: number;
   description: string;
-  assigneeId: number | null;
+  assigneeId: number;
   completed: boolean;
+};
+
+export type TicketExpanded = Ticket & {
+  assignee: User;
+  isActive: boolean;
 };
