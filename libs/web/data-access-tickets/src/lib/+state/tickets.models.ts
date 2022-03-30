@@ -12,6 +12,7 @@ export type Ticket = {
   description: string;
   assigneeId: number;
   completed: boolean;
+  isUpdating?: boolean;
 };
 
 export type TicketExpanded = Ticket & {

@@ -10,7 +10,7 @@ import { Ticket, User } from './+state/tickets.models';
  */
 
 function randomDelay() {
-  return Math.random() * 1000;
+  return Math.random() * 10000;
 }
 
 @Injectable()

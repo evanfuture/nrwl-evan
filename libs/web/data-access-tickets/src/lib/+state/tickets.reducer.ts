@@ -10,7 +10,7 @@ export interface State extends EntityState<Ticket> {
   loaded: boolean;
   error?: string;
   users: EntityState<User>;
-  updated: boolean;
+  searchTerm: string;
 }
 
 export interface TicketsPartialState {
@@ -24,7 +24,7 @@ export const initialState: State = ticketsAdapter.getInitialState({
   // set initial required properties
   loaded: false,
   users: usersAdapter.getInitialState(),
-  updated: true,
+  searchTerm: '',
 });
 
 const ticketsReducer = createReducer(
@@ -45,23 +45,29 @@ const ticketsReducer = createReducer(
     ...state,
     users: usersAdapter.setAll(users, { ...state.users }),
   })),
-  on(TicketsActions.updateTicket, (state) => ({
-    ...state,
-    updated: false,
-  })),
+  on(TicketsActions.updateTicket, (state, { updates, id }) =>
+    ticketsAdapter.updateOne(
+      { id: `${id}` || state.selectedId, changes: { ...updates, isUpdating: true } },
+      { ...state },
+    ),
+  ),
   on(TicketsActions.updateTicketSuccess, (state, { updates, id }) =>
-    ticketsAdapter.updateOne({ id, changes: updates }, { ...state, updated: true }),
+    ticketsAdapter.updateOne({ id, changes: { ...updates, isUpdating: false } }, { ...state }),
   ),
   on(TicketsActions.createTicket, (state) => ({
     ...state,
     updated: false,
   })),
   on(TicketsActions.createTicketSuccess, (state, { newTicket }) =>
-    ticketsAdapter.addOne(newTicket, { ...state, updated: true }),
+    ticketsAdapter.addOne({ ...newTicket, isUpdating: false }, { ...state }),
   ),
   on(TicketsActions.setId, (state, { id }) => ({
     ...state,
     selectedId: id,
+  })),
+  on(TicketsActions.updateSearchTerm, (state, { searchTerm }) => ({
+    ...state,
+    searchTerm,
   })),
 );
 

@@ -11,7 +11,10 @@ export const loadUsers = createAction('[Tickets] Load Users');
 export const loadUsersSuccess = createAction('[Tickets] Load Users Success', props<{ users: User[] }>());
 export const loadUsersFailure = createAction('[Tickets] Load Users Failure', props<{ error: any }>());
 
-export const updateTicket = createAction('[Tickets] Update Ticket', props<{ updates: Partial<Omit<Ticket, 'id'>> }>());
+export const updateTicket = createAction(
+  '[Tickets] Update Ticket',
+  props<{ updates: Partial<Omit<Ticket, 'id'>>; id?: number }>(),
+);
 export const updateTicketSuccess = createAction(
   '[Tickets] Update Ticket Success',
   props<{ id: number; updates: Partial<Omit<Ticket, 'id'>> }>(),
@@ -24,5 +27,7 @@ export const createTicket = createAction(
 );
 export const createTicketSuccess = createAction('[Tickets] Create Ticket Success', props<{ newTicket: Ticket }>());
 export const createTicketFailure = createAction('[Tickets] Create Ticket Failure', props<{ error: any }>());
+
+export const updateSearchTerm = createAction('[Tickets] Update Search Term', props<{ searchTerm: string }>());
 
 export const setId = createAction('[Tickets] Set Ticket Id', props<{ id: string }>());

@@ -10,8 +10,7 @@ const { selectAll: selectAllUsers, selectEntities: selectUserEntities } = usersA
 
 export const getTicketsLoaded = createSelector(getTicketsState, (state: State) => state.loaded);
 export const getTicketsLoading = createSelector(getTicketsState, (state: State) => !state.loaded);
-export const getTicketUpdated = createSelector(getTicketsState, (state: State) => state.updated);
-export const getTicketUpdating = createSelector(getTicketsState, (state: State) => !state.updated);
+export const getSearchTerm = createSelector(getTicketsState, (state: State) => state.searchTerm);
 
 export const getTicketsError = createSelector(getTicketsState, (state: State) => state.error);
 
@@ -28,18 +27,25 @@ export const getSelected = createSelector(getTicketsEntities, getSelectedId, (en
   selectedId ? entities[selectedId] : undefined,
 );
 
+export const getTicketUpdating = createSelector(getSelected, (currentTicket) => currentTicket?.isUpdating);
+
 export const getAllTicketsExpanded = createSelector(
   getAllTickets,
   getUsersEntities,
   getSelectedId,
-  (tickets, userEntities, selectedId) => {
-    const withUsers: TicketExpanded[] = tickets.map((ticket) => {
-      return {
-        ...ticket,
-        assignee: ticket.assigneeId ? userEntities[ticket.assigneeId] : null,
-        isActive: !!selectedId && selectedId === `${ticket.id}`,
-      };
-    });
+  getSearchTerm,
+  (tickets, userEntities, selectedId, searchTerm) => {
+    const withUsers: TicketExpanded[] = tickets
+      .filter((ticket) => {
+        return ticket.description.includes(searchTerm);
+      })
+      .map((ticket) => {
+        return {
+          ...ticket,
+          assignee: ticket.assigneeId ? userEntities[ticket.assigneeId] : null,
+          isActive: !!selectedId && selectedId === `${ticket.id}`,
+        };
+      });
     return withUsers;
   },
 );

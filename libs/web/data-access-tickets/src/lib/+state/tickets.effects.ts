@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, switchMap } from 'rxjs';
 import { BackendService } from '../backend.service';
 import * as TicketsActions from './tickets.actions';
 import { getSelectedId } from './tickets.selectors';
@@ -43,9 +43,9 @@ export class TicketsEffects {
     this.actions$.pipe(
       ofType(TicketsActions.updateTicket),
       concatLatestFrom(() => this.store.select(getSelectedId)),
-      switchMap(([{ updates }, ticketId]) => {
-        const id = Number(ticketId);
-        return this.backendService.update(id, updates).pipe(
+      concatMap(([{ updates, id }, ticketId]) => {
+        const idToUpdate = Number(id || ticketId);
+        return this.backendService.update(idToUpdate, updates).pipe(
           map(() => TicketsActions.updateTicketSuccess({ updates, id })),
           catchError((error) => of(TicketsActions.updateTicketFailure({ error }))),
         );
@@ -56,7 +56,7 @@ export class TicketsEffects {
   createTicket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TicketsActions.createTicket),
-      switchMap(({ description, assigneeId }) => {
+      concatMap(({ description, assigneeId }) => {
         return this.backendService.newTicket(description, assigneeId).pipe(
           map((newTicket) => TicketsActions.createTicketSuccess({ newTicket })),
           catchError((error) => of(TicketsActions.createTicketFailure({ error }))),
